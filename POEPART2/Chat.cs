@@ -30,5 +30,10 @@
         {
             return ChatBot.GetChatBotResponse(input);
         }
+
+        public string GetFavouriteTopic()
+        {
+            return ChatBot.GetFavouriteTopic();
+        }
     }
 }
