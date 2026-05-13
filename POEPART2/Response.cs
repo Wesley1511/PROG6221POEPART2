@@ -22,7 +22,8 @@ namespace POEPART2
         {
             string lowerInput = input.ToLower();
 
-            if (lowerInput.Contains("tell me more") || lowerInput.Contains("another tip") || lowerInput.Contains("explain more") || lowerInput.Contains("more info") || lowerInput.Contains("i am confused"))   //list of phrases that the bot can use to tell if the user wants more info or is confused
+
+            if (lowerInput.Contains("tell me more") || lowerInput.Contains("another tip") || lowerInput.Contains("explain more") || lowerInput.Contains("more info")) // the follow up question keywords for the bot
             {
                 if (lastTopic != "")
                     return RespondToTopic(lastTopic);
@@ -30,7 +31,19 @@ namespace POEPART2
                     return "I'm not sure what topic you'd like more info on. Try asking about passwords, phishing, scams, privacy, or malware!";
             }
 
-            if (lowerInput.Contains("i'm interested in") || lowerInput.Contains("im interested in") || lowerInput.Contains("i am interested in")) //list of phrases that will allow the bot to detect a users "favourite" phrase
+            string sentimentPrefix = ""; //this section checks for a keyword that allows the bot to detect a users "sentiment" and allows it to respond in a less robotic way
+            if (lowerInput.Contains("worried") || lowerInput.Contains("scared") || lowerInput.Contains("afraid"))
+                sentimentPrefix = "It's completely understandable to feel that way. Let me share some tips to help you stay safe. ";
+            else if (lowerInput.Contains("frustrated") || lowerInput.Contains("angry") || lowerInput.Contains("annoyed"))
+                sentimentPrefix = "I hear you, this stuff can be really frustrating. Let me help clear things up. ";
+            else if (lowerInput.Contains("curious") || lowerInput.Contains("interested") || lowerInput.Contains("wondering"))
+                sentimentPrefix = "Great question, curiosity is the first step to staying safe online! ";
+            else if (lowerInput.Contains("confused") || lowerInput.Contains("unsure") || lowerInput.Contains("don't understand"))
+                sentimentPrefix = "No worries at all, this can be confusing. Let me break it down for you. ";
+            else if (lowerInput.Contains("happy") || lowerInput.Contains("glad") || lowerInput.Contains("great"))
+                sentimentPrefix = "Love the positive energy! ";
+
+            if (lowerInput.Contains("i'm interested in") || lowerInput.Contains("im interested in") || lowerInput.Contains("i am interested in"))   // this allows the bot to remember the users "favourite topic"
             {
                 string[] topics = { "password", "phishing", "scam", "privacy", "malware", "virus", "hacking" };
                 foreach (string topic in topics)
@@ -43,18 +56,21 @@ namespace POEPART2
                 }
             }
 
-            string detectedTopic = DetectTopic(lowerInput); //see function below
+            string detectedTopic = DetectTopic(lowerInput); // see DetectTopic function
             if (detectedTopic != "")
             {
                 lastTopic = detectedTopic;
-                return RespondToTopic(detectedTopic);
+                return sentimentPrefix + RespondToTopic(detectedTopic); // this checks if a sentiment was detected and if it does it adds the prefix to make it feel more natural
             }
 
             if (lowerInput.Contains("exit")) //the keywoard for exiting the program, not really sure if this is even needed anymore...
                 return "Thank you for chatting with me! If you have any more questions in the future, feel free to reach out. Stay safe online!";
 
-            if (favouriteTopic != "")
+            if (favouriteTopic != "")   // this section just allows the bot the fallback to a predetermined response if it cant detect what the user wants
                 return $"I'm not sure I understood that. As someone interested in {favouriteTopic}, you might want to ask me more about it! Or try asking about passwords, phishing, scams, privacy, or malware.";
+
+            if (sentimentPrefix != "")
+                return sentimentPrefix + "I'm not sure what topic you'd like help with. Try asking about passwords, phishing, scams, privacy, or malware!";
 
             return "I'm sorry, I didn't quite understand that. Try asking about passwords, phishing, scams, privacy, or malware!";
         }
