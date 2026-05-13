@@ -1,7 +1,6 @@
 ﻿using System.Media;
 using System.Windows;
 using System.Windows.Input;
-using System.Media;
 
 namespace POEPART2
 {
@@ -26,18 +25,18 @@ namespace POEPART2
             chatLog.AppendText("[CyberSafe] Hello! My name is CyberSafe and I will be your cybersecurity assistant today! Please enter your name above to get started!\n");
         }
 
-        private void StartChat_Click(object sender, RoutedEventArgs e)
+        private void StartChat_Click(object sender, RoutedEventArgs e)  // this function is called when the user clicks the start chat button and simply calls the BeginChat function
         {
             BeginChat();
         }
 
-        private void nameBox_KeyDown(object sender, KeyEventArgs e)
+        private void nameBox_KeyDown(object sender, KeyEventArgs e)  // this function is called when the user presses a key in the name box, it checks if the key is Enter and calls the BeginChat function if it is
         {
             if (e.Key == Key.Enter)
                 BeginChat();
         }
 
-        private void BeginChat()
+        private void BeginChat()    // this function is called when the user clicks the start chat button or presses enter in the name box, it sets the users name and displays a welcome message from the bot
         {
             if (chatStarted || string.IsNullOrWhiteSpace(nameBox.Text)) return;
 
@@ -53,18 +52,18 @@ namespace POEPART2
             inputBox.Focus();
         }
 
-        private void SendButton_Click(object sender, RoutedEventArgs e)
+        private void SendButton_Click(object sender, RoutedEventArgs e)  // this function is called when the user clicks the send button and simply calls the SendMessage function
         {
             SendMessage();
         }
 
-        private void inputBox_KeyDown(object sender, KeyEventArgs e)
+        private void inputBox_KeyDown(object sender, KeyEventArgs e)  // this function is called when the user presses a key in the input box, it checks if the key is Enter and calls the SendMessage function if it is
         {
             if (e.Key == Key.Enter)
                 SendMessage();
         }
 
-        private void SendMessage()
+        private void SendMessage()  // this function is called when the user clicks the send button or presses enter in the input box, it sends the users message to the bot and displays the bots response
         {
             if (!chatStarted || string.IsNullOrWhiteSpace(inputBox.Text)) return;
 

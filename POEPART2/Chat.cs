@@ -1,6 +1,6 @@
 ﻿namespace POEPART2
 {
-    internal class Chat
+    internal class Chat // class that represents a chat between a user and a chatbot, basically an intermediary for the users and chatbot
     {
         private User ChatUser;
         private ChatBot ChatBot;

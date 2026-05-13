@@ -3,7 +3,7 @@
     internal class ChatBot
     {
         string name = "CyberSafe";
-        private Response botResponse = new Response(); // response object instance, initialised within the chatbot to give it "memory"
+        private Response botResponse = new Response(); // response object, used to generate the bots responses and to act as "memory"
 
         public void SetChatBotName(string name)
         {
