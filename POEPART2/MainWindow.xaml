@@ -1,0 +1,48 @@
+﻿<Window x:Class="POEPART2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CyberSafe" Height="500" Width="700">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Name entry panel, hidden once name is set -->
+        <StackPanel x:Name="namePanel" Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Enter your name: " VerticalAlignment="Center"/>
+            <TextBox x:Name="nameBox" Width="200" Margin="5,0" KeyDown="nameBox_KeyDown"/>
+            <Button Content="Start Chat" Click="StartChat_Click"/>
+        </StackPanel>
+
+        <!-- Chat log -->
+        <TextBox x:Name="chatLog"
+                 Grid.Row="1"
+                 IsReadOnly="True"
+                 TextWrapping="Wrap"
+                 VerticalScrollBarVisibility="Auto"
+                 Margin="0,0,0,10"/>
+
+        <!-- Input area, disabled until name is entered -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="inputBox"
+                     Grid.Column="0"
+                     IsEnabled="False"
+                     TextWrapping="Wrap"
+                     KeyDown="inputBox_KeyDown"
+                     Margin="0,0,5,0"/>
+            <Button x:Name="sendButton"
+                    Grid.Column="1"
+                    Content="Send"
+                    IsEnabled="False"
+                    Click="SendButton_Click"/>
+        </Grid>
+    </Grid>
+
+</Window>
