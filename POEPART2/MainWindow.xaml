@@ -10,22 +10,29 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Name entry panel, hidden once name is set -->
+        <!-- Name entry panel, hidden after users name is set -->
         <StackPanel x:Name="namePanel" Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
             <TextBlock Text="Enter your name: " VerticalAlignment="Center"/>
             <TextBox x:Name="nameBox" Width="200" Margin="5,0" KeyDown="nameBox_KeyDown"/>
             <Button Content="Start Chat" Click="StartChat_Click"/>
         </StackPanel>
 
-        <!-- Chat log -->
+        <!-- Chat log area -->
         <TextBox x:Name="chatLog"
-                 Grid.Row="1"
-                 IsReadOnly="True"
-                 TextWrapping="Wrap"
-                 VerticalScrollBarVisibility="Auto"
-                 Margin="0,0,0,10"/>
+         Grid.Row="1"
+         IsReadOnly="True"
+         TextWrapping="Wrap"
+         VerticalScrollBarVisibility="Auto"
+         Margin="0,0,0,10">
+            <TextBox.Background>
+                <ImageBrush ImageSource="Images/Locksmith.png" 
+                    Opacity="0.2" 
+                    Stretch="UniformToFill"/>
+            </TextBox.Background>
+        </TextBox>
 
-        <!-- Input area, disabled until name is entered -->
+
+        <!-- Input area, disabled until a users name is entered -->
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
