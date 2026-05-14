@@ -20,10 +20,10 @@ namespace POEPART2
 
         public string Respond(string input)
         {
-            string lowerInput = input.ToLower();
+            string lowerInput = input.ToLower(); // just converts the input to lowercase so all keywords are case insensitive
 
 
-            if (lowerInput.Contains("tell me more") || lowerInput.Contains("another tip") || lowerInput.Contains("explain more") || lowerInput.Contains("more info")) // the follow up question keywords for the bot
+            if (lowerInput.Contains("tell me more") || lowerInput.Contains("another tip") || lowerInput.Contains("explain more") || lowerInput.Contains("more info") || lowerInput.Contains("give me another tip")) // the follow up question keywords for the bot
             {
                 if (lastTopic != "")
                     return RespondToTopic(lastTopic);
@@ -31,7 +31,7 @@ namespace POEPART2
                     return "I'm not sure what topic you'd like more info on. Try asking about passwords, phishing, scams, privacy, or malware!";
             }
 
-            string sentimentPrefix = ""; //this section checks for a keyword that allows the bot to detect a users "sentiment" and allows it to respond in a less robotic way
+            string sentimentPrefix = ""; //this section checks for a keyword that allows the bot to detect a users "sentiment" and allows it to respond in a less robotic way (TODO: maybe make this a dictionary in the future)
             if (lowerInput.Contains("worried") || lowerInput.Contains("scared") || lowerInput.Contains("afraid"))
                 sentimentPrefix = "It's completely understandable to feel that way. Let me share some tips to help you stay safe. ";
             else if (lowerInput.Contains("frustrated") || lowerInput.Contains("angry") || lowerInput.Contains("annoyed"))
