@@ -13,9 +13,14 @@ CyberSafe is a WPF-based cybersecurity chatbot built in C# that gives advice and
 - .NET 10 SDK
 
 ## Setup
+### Option A
 1) Download or clone the repository
 2) Open POEPART2.slnx in Visual Studio
 3) Press F5 or click Start to build and run
+### Option B
+1) Download the CyberSafe.zip from any relevant release
+2) Unzip the file with a tool like 7zip
+3) Run the CyberSafe executable found inside
 
 ## Usage Instructions
 1) Enter your name in the text field at the top and click Start Chat
