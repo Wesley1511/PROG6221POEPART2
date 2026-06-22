@@ -8,6 +8,12 @@ namespace POEPART2
     {
         private TaskRepository repository = new TaskRepository();
         private int? pendingTaskId = null; // tracks a task waiting on a reminder reply
+        private ActivityLogger logger;
+
+        public TaskAssistant(ActivityLogger sharedLogger)
+        {
+            logger = sharedLogger;
+        }
 
         // Predefined descriptions for common cybersecurity tasks
         private string GetDefaultDescription(string title)
@@ -41,10 +47,10 @@ namespace POEPART2
             if (lower.StartsWith("no"))
             {
                 pendingTaskId = null;
+                logger.Log("User declined to set a reminder for a task.");
                 return "No problem, no reminder has been set for that task.";
             }
 
-            // Try to extract a number of days, e.g. "remind me in 3 days" or "yes, 3 days"
             Match match = Regex.Match(lower, @"(\d+)\s*day");
             if (match.Success)
             {
@@ -52,6 +58,7 @@ namespace POEPART2
                 DateTime reminderDate = DateTime.Now.AddDays(days);
 
                 repository.SetReminder(pendingTaskId.Value, reminderDate);
+                logger.Log($"Reminder set for task #{pendingTaskId.Value} in {days} day(s) ({reminderDate:dd MMM yyyy}).");
                 pendingTaskId = null;
 
                 return $"Got it! I'll remind you in {days} day{(days == 1 ? "" : "s")} (on {reminderDate:dd MMM yyyy}).";
@@ -70,7 +77,6 @@ namespace POEPART2
         {
             string lower = input.ToLower().Trim();
 
-            // ADD TASK
             Match addMatch = Regex.Match(input, @"add task\s*-?\s*(.+)", RegexOptions.IgnoreCase);
             if (addMatch.Success)
             {
@@ -80,35 +86,42 @@ namespace POEPART2
                 int newId = repository.AddTask(title, description, null);
                 pendingTaskId = newId;
 
+                logger.Log($"Task added: \"{title}\" (ID #{newId}).");
+
                 response = $"Task added with description \"{description}\" Would you like a reminder?";
                 return true;
             }
 
-            // VIEW TASKS
             if (lower.Contains("view tasks") || lower.Contains("show tasks") || lower.Contains("list tasks") || lower.Contains("my tasks"))
             {
                 response = BuildTaskListResponse();
                 return true;
             }
 
-            // COMPLETE TASK — "complete task 3" or "mark task 3 as done"
             Match completeMatch = Regex.Match(lower, @"(complete|finish|done with)\s*task\s*(\d+)");
             if (completeMatch.Success)
             {
                 int id = int.Parse(completeMatch.Groups[2].Value);
                 bool success = repository.MarkTaskCompleted(id);
+
+                if (success)
+                    logger.Log($"Task #{id} marked as completed.");
+
                 response = success
                     ? $"Task {id} marked as completed. Great job staying on top of your cybersecurity!"
                     : $"I couldn't find a task with ID {id}.";
                 return true;
             }
 
-            // DELETE TASK — "delete task 3" or "remove task 3"
             Match deleteMatch = Regex.Match(lower, @"(delete|remove)\s*task\s*(\d+)");
             if (deleteMatch.Success)
             {
                 int id = int.Parse(deleteMatch.Groups[2].Value);
                 bool success = repository.DeleteTask(id);
+
+                if (success)
+                    logger.Log($"Task #{id} deleted.");
+
                 response = success
                     ? $"Task {id} has been deleted."
                     : $"I couldn't find a task with ID {id}.";

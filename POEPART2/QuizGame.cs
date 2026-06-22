@@ -8,14 +8,16 @@ namespace POEPART2
     internal class QuizGame
     {
         private List<QuizQuestion> questions;
-        private List<QuizQuestion> sessionQuestions; // shuffled subset for this playthrough
+        private List<QuizQuestion> sessionQuestions;
         private int currentIndex = -1;
         private int score = 0;
         private bool isActive = false;
+        private ActivityLogger logger;
 
-        public QuizGame()
+        public QuizGame(ActivityLogger sharedLogger)
         {
             questions = BuildQuestionBank();
+            logger = sharedLogger;
         }
 
         public bool IsActive()
@@ -26,10 +28,12 @@ namespace POEPART2
         // Starts a new quiz session, shuffling the question order
         public string StartQuiz()
         {
-            sessionQuestions = questions.OrderBy(q => Guid.NewGuid()).ToList(); // shuffle
+            sessionQuestions = questions.OrderBy(q => Guid.NewGuid()).ToList();
             currentIndex = -1;
             score = 0;
             isActive = true;
+
+            logger.Log("Quiz started.");
 
             return AdvanceToNextQuestion();
         }
@@ -134,6 +138,8 @@ namespace POEPART2
                 feedback = "Good job! You're on the right track, but there's room to learn more.";
             else
                 feedback = "Keep learning! Cybersecurity awareness takes practice, don't get discouraged.";
+
+            logger.Log($"Quiz completed with a score of {score}/{sessionQuestions.Count}.");
 
             return $"Quiz complete! Your final score: {score}/{sessionQuestions.Count}\n{feedback}";
         }
