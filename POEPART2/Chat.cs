@@ -1,9 +1,11 @@
 ﻿namespace POEPART2
 {
-    internal class Chat // class that represents a chat between a user and a chatbot, basically an intermediary for the users and chatbot
+    internal class Chat
     {
         private User ChatUser;
         private ChatBot ChatBot;
+        private TaskAssistant taskAssistant = new TaskAssistant();
+        private QuizGame quizGame = new QuizGame();
 
         public Chat(User user, ChatBot chatbot)
         {
@@ -26,14 +28,41 @@
             return ChatBot.GetChatBotName();
         }
 
-        public string GetBotResponse(string input)
-        {
-            return ChatBot.GetChatBotResponse(input);
-        }
-
         public string GetFavouriteTopic()
         {
             return ChatBot.GetFavouriteTopic();
+        }
+
+        public string GetBotResponse(string input)
+        {
+            string lowerInput = input.ToLower().Trim();
+
+            // If a quiz is in progress, treat all input as quiz answers
+            if (quizGame.IsActive())
+            {
+                return quizGame.SubmitAnswer(input);
+            }
+
+            // Start a new quiz
+            if (lowerInput.Contains("quiz") || lowerInput.Contains("play a game") || lowerInput.Contains("start game"))
+            {
+                return quizGame.StartQuiz();
+            }
+
+            // If we're waiting on a reminder reply, handle that first
+            if (taskAssistant.IsAwaitingReminderReply())
+            {
+                return taskAssistant.HandleReminderReply(input);
+            }
+
+            // Check if this input is a task command
+            if (taskAssistant.TryHandleTaskCommand(input, out string taskResponse))
+            {
+                return taskResponse;
+            }
+
+            // Otherwise, fall back to the normal cybersecurity chatbot
+            return ChatBot.GetChatBotResponse(input);
         }
     }
 }
