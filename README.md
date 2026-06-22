@@ -50,3 +50,5 @@ This project requires MySQL. To set up the database:
 
 ## Youtube Video Link
 
+https://www.youtube.com/watch?v=geViSHt5cUE
+
