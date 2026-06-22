@@ -12,7 +12,7 @@ namespace POEPART2
 
         public TaskAssistant(ActivityLogger sharedLogger)
         {
-            logger = sharedLogger;
+            logger = sharedLogger;  //logger object for use in the activity tracker
         }
 
         // Predefined descriptions for common cybersecurity tasks
@@ -132,7 +132,7 @@ namespace POEPART2
             return false;
         }
 
-        private string BuildTaskListResponse()
+        private string BuildTaskListResponse()      //function for returning the list of all tasks in a nice format, also handles the case where there are no tasks to show
         {
             var tasks = repository.GetAllTasks();
 

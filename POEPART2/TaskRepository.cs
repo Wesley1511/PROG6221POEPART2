@@ -8,7 +8,7 @@ namespace POEPART2
     {
         private readonly string connectionString = "Server=localhost;Database=cybersafe;Uid=root;Pwd=12345;";
 
-        public int AddTask(string title, string description, DateTime? reminderDate)
+        public int AddTask(string title, string description, DateTime? reminderDate)    //function to add a new task to the database, returns the new task's ID
         {
             using (var connection = new MySqlConnection(connectionString))
             {
@@ -28,7 +28,7 @@ namespace POEPART2
             }
         }
 
-        public void SetReminder(int taskId, DateTime reminderDate)
+        public void SetReminder(int taskId, DateTime reminderDate)  //function for setting the reminder date for a task in the database
         {
             using (var connection = new MySqlConnection(connectionString))
             {
@@ -44,7 +44,7 @@ namespace POEPART2
             }
         }
 
-        public List<TaskItem> GetAllTasks()
+        public List<TaskItem> GetAllTasks() // function to retrive all tasks from the database
         {
             var tasks = new List<TaskItem>();
 
@@ -74,7 +74,7 @@ namespace POEPART2
             return tasks;
         }
 
-        public bool MarkTaskCompleted(int taskId)
+        public bool MarkTaskCompleted(int taskId)   //function to mark a task as completed in the database, returns true if the update was successful
         {
             using (var connection = new MySqlConnection(connectionString))
             {
@@ -89,7 +89,7 @@ namespace POEPART2
             }
         }
 
-        public bool DeleteTask(int taskId)
+        public bool DeleteTask(int taskId) //function to delete a task from the database, returns true if the deletion was successful
         {
             using (var connection = new MySqlConnection(connectionString))
             {
@@ -104,7 +104,7 @@ namespace POEPART2
             }
         }
 
-        public TaskItem GetTaskById(int taskId)
+        public TaskItem GetTaskById(int taskId) //function to retrieve a specific task from the database by its ID, returns a TaskItem object if found, otherwise null
         {
             using (var connection = new MySqlConnection(connectionString))
             {

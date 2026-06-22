@@ -2,7 +2,7 @@
 
 namespace POEPART2
 {
-    internal class ActivityLogEntry
+    internal class ActivityLogEntry     //class to store individual log entries for the activity tracker, with a timestamp and description
     {
         public DateTime Timestamp { get; set; }
         public string Description { get; set; }

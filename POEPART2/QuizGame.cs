@@ -17,7 +17,7 @@ namespace POEPART2
         public QuizGame(ActivityLogger sharedLogger)
         {
             questions = BuildQuestionBank();
-            logger = sharedLogger;
+            logger = sharedLogger;  //logger object for use in the activity tracker
         }
 
         public bool IsActive()
@@ -38,7 +38,7 @@ namespace POEPART2
             return AdvanceToNextQuestion();
         }
 
-        private string AdvanceToNextQuestion()
+        private string AdvanceToNextQuestion()      //simply moves the quiz to the next question and returns the prompt, or if there are no more questions it ends the quiz and returns the final score message
         {
             currentIndex++;
 
@@ -144,7 +144,7 @@ namespace POEPART2
             return $"Quiz complete! Your final score: {score}/{sessionQuestions.Count}\n{feedback}";
         }
 
-        private List<QuizQuestion> BuildQuestionBank()
+        private List<QuizQuestion> BuildQuestionBank()  //my list containing all my quiz questions and answers aswell as their explanations
         {
             return new List<QuizQuestion>
             {
