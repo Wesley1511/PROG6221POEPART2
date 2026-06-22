@@ -4,7 +4,7 @@ using MySql.Data.MySqlClient;
 
 namespace POEPART2
 {
-    internal class TaskRepository
+    internal class TaskRepository     //class responsible for interacting with the database to perform CRUD operations on tasks
     {
         private readonly string connectionString = "Server=localhost;Database=cybersafe;Uid=root;Pwd=12345;";
 
