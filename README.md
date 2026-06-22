@@ -9,6 +9,10 @@ CyberSafe is a WPF-based cybersecurity chatbot built in C# that gives advice and
 * Sentiment detection to provide empathetic responses
 * Memory system to remember your name and favourite topics
 * Follow-up question support ("tell me more", "give me another tip")
+* Task assistant to allow for tracking of important events
+* Quiz minigame to help test your cybersecurity knowledge
+* Robust NLP to create a natural conversation with the user
+* activity logger to track the actions taken by the bot
 
 ## Requirements
 
@@ -39,9 +43,10 @@ This project requires MySQL. To set up the database:
    * "I'm worried about online scams"
    * "Give me a phishing tip"
    * "What should I know about privacy?"
+
+3\. use a keyword such as add task or quiz to either add a new task or start the quiz minigame
+
 4. Simply close the application when you are done
 
 ## Youtube Video Link
-
-https://youtu.be/y4kXWuJaGEk
 
